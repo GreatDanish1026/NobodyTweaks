@@ -1,0 +1,6 @@
+bin/
+*.exe
+*.dll
+*.addon64
+*.log
+__pycache__/
