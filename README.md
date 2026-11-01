@@ -1,4 +1,4 @@
-# NobodyTweaks 0.4.0
+# NobodyTweaks 1.0.0
 
 Graphics add-on for **Nobody Wants to Die** (PC, Steam), for ReShade with add-on support.
 Switches on the game's hidden hardware ray tracing, raises its lighting, shadow and detail
