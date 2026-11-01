@@ -157,3 +157,8 @@ and Cinematic (+100% measured).
 
 RTX 5080, 4K, DLSS, HDR, one scene: Game 12.84 ms (77.9 fps), Ultra+ 14.48 ms (69.0 fps, +13%),
 Cinematic 25.26 ms (39.6 fps, +97%). 0.3.5 shows these in the picker.
+
+## 0.4.0 (2026-11-01)
+
+FSR 3 frame generation option removed: NobodyDLSS (E:\NobodyDLSS) now handles DLSS and FSR
+upscaling and frame generation (DLSS SR and DLSS-G user-confirmed).

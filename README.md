@@ -1,4 +1,4 @@
-# NobodyTweaks 0.3.5
+# NobodyTweaks 0.4.0
 
 Graphics add-on for **Nobody Wants to Die** (PC, Steam), for ReShade with add-on support.
 Switches on the game's hidden hardware ray tracing, raises its lighting, shadow and detail
@@ -13,14 +13,15 @@ none).
 - **Detail**: texture memory beyond the game's 2.5 GB, 16x anisotropic filtering, texture
   sharpness, finer geometry, longer draw distance, and switches for film grain, lens flares and
   bloom.
-- **Frame generation**: the game's own FSR 3 frame generation, which its menu doesn't offer. It
-  works with FSR chosen as the upscaler in the game's menu.
 - **HDR**: Unreal's own HDR10 output with a peak brightness slider (400-10,000 nits), and
   optional UI and mid-grey brightness.
 - **Quality presets**: *Ultra+* (about 13% slower) and *Cinematic* (about 97% slower), measured
-  on an RTX 5080 at 4K with DLSS. They leave ray tracing, frame generation and HDR alone.
+  on an RTX 5080 at 4K with DLSS. They leave ray tracing and HDR alone.
   **Measure preset costs** and **Measure each option** check them on your PC.
 - **F8** switches every tweak off and on, to compare.
+
+DLSS (with its newer models), FSR and frame generation are in the companion add-on
+**NobodyDLSS**.
 
 Every option starts at the game's own value.
 

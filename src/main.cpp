@@ -141,7 +141,6 @@ struct Option {
 };
 
 constexpr const char* kRayTracingTab = "Ray tracing";
-constexpr const char* kFrameGenTab = "Frame generation";  // in no preset, not measured
 constexpr const char* kHdrTab = "HDR";
 
 std::vector<Option> g_options = {
@@ -273,14 +272,8 @@ std::vector<Option> g_options = {
     {"Detail", "Post-processing", "Bloom", "Bloom", "Glow around bright lights.",
      L"r.BloomQuality", {{"Game", 0, {}}, {"Off", 1, {{L"r.BloomQuality", L"0"}}}}},
 
-    // ------------------------------------------------ frame generation (experimental)
-    {"Frame generation", "FSR 3", "FsrFg", "FSR 3 frame generation",
-     "The game ships AMD's FSR 3 plugin with its frame generation, which the menu doesn't\n"
-     "offer; it also runs on NVIDIA cards. In Unreal it usually needs FSR 3 as the upscaler\n"
-     "(choose FSR in the game's upscaling menu). Experimental: it may do nothing with DLSS,\n"
-     "and ReShade's overlay may flicker while it runs.",
-     L"r.FidelityFX.FI.Enabled",
-     {{"Game (off)", 0, {}}, {"On", 1, {{L"r.FidelityFX.FI.Enabled", L"1"}}}}},
+    // Frame generation (the game's FSR 3 frame interpolation, 0.2.0-0.3.5) moved to NobodyDLSS,
+    // which handles DLSS and FSR upscaling and frame generation together.
 
     // ------------------------------------------------ HDR (the game has no HDR setting)
     // As in TrueColorsTweaks: r.HDR.EnableHDROutput with the Rec. 2020 gamut makes the engine
@@ -793,7 +786,7 @@ void __fastcall HookedSinks(void* self) {
 //
 // A preset sets the quality options (option key -> choice id); every other quality option goes
 // to Game. Options in no preset are left alone. The preset shown is derived from the options,
-// "Custom" when none matches. Ray tracing, frame generation and HDR are in no preset.
+// "Custom" when none matches. Ray tracing and HDR are in no preset.
 
 struct QualityPreset {
     const char* label;
@@ -813,7 +806,7 @@ const QualityPreset kPresets[] = {
      "The upgrades that cost little: finer Lumen lighting (High) with detailed tracing and\n"
      "contact shadows, reflections on glass and on surfaces up to roughness 0.6, sharp\n"
      "shadows, fine fog, 8 GB textures, 16x filtering, finer geometry and longer draw\n"
-     "distance. The Ray tracing, Frame generation and HDR tabs are left as they are.\n\n"
+     "distance. The Ray tracing and HDR tabs are left as they are.\n\n"
      "Measured on an RTX 5080 at 4K with DLSS in one scene: 78 fps with Game, 69 with\n"
      "Ultra+.",
      {{"GiDetail", 1}, {"MeshSdf", 1}, {"ShortAo", 1}, {"Roughness", 6}, {"FrontLayer", 1}, {"Shadows", 1},
@@ -922,7 +915,7 @@ void ApplyStage(const Stage& st) {
 }
 
 bool Measurable(const Option& o) {
-    if (!strcmp(o.tab, kHdrTab) || !strcmp(o.tab, kFrameGenTab)) return false;
+    if (!strcmp(o.tab, kHdrTab)) return false;
     if (!strcmp(o.tab, kRayTracingTab)) return g_asPerSec > 0;  // only while ray tracing runs
     return true;
 }
@@ -1458,7 +1451,7 @@ void DrawOverlay(effect_runtime*) {
         if (ImGui::SmallButton("Measure each option")) StartMeasure(true);
         ImGui::EndDisabled();
         Help("Runs every quality option on its own at each of its choices (11 s each, several\n"
-             "minutes in all; HDR and frame generation aren't measured, Ray tracing only while it runs)\n"
+             "minutes in all; HDR isn't measured, Ray tracing only while it runs)\n"
              "and writes how much each one costs to " DT_PRODUCT ".log, costliest first.");
         if (g_measure.done) {
             ImGui::PushTextWrapPos(ImGui::GetFontSize() * 34.0f);
